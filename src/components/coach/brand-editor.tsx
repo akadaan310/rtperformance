@@ -173,7 +173,7 @@ function ImageSlot({ slug, kind, label, url, hint }: { slug: string; kind: "logo
             // eslint-disable-next-line @next/next/no-img-element -- user-uploaded asset
             <img src={url} alt={`Current ${label.toLowerCase()}`} className="size-full object-cover" />
           ) : (
-            <span className="text-[10px] uppercase tracking-wider text-stone-600">None</span>
+            <span className="text-[10px] uppercase tracking-wider text-stone-500">None</span>
           )}
         </div>
         <div className="min-w-0 flex-1 space-y-2">

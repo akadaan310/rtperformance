@@ -54,7 +54,7 @@ export function SignUpForm({ next, email }: { next?: string; email?: string }) {
       </SubmitButton>
       <p className="text-center text-xs text-stone-400">
         Already have an account?{" "}
-        <Link href={next ? `/login?next=${encodeURIComponent(next)}` : "/login"} className="text-ivory-100 hover:text-accent">
+        <Link href={next ? `/login?next=${encodeURIComponent(next)}` : "/login"} className="text-ivory-100 underline underline-offset-4 hover:text-accent">
           Sign in
         </Link>
       </p>

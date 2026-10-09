@@ -10,8 +10,19 @@ export const serverEnv = {
   aiTimeoutMs: positiveInt(process.env.AI_TIMEOUT_MS, 45_000),
 };
 
+/**
+ * Credentials for The Tech Guy. Preferred: a direct ANTHROPIC_API_KEY. On Vercel, with no key set, the app uses the
+ * project's linked Vercel AI Gateway (VERCEL_OIDC_TOKEN, provided automatically, or AI_GATEWAY_API_KEY).
+ */
+export function assistantCredentials(): { apiKey: string; baseURL?: string; model: string } | null {
+  if (serverEnv.anthropicApiKey && serverEnv.anthropicModel) return { apiKey: serverEnv.anthropicApiKey, model: serverEnv.anthropicModel };
+  const gatewayKey = process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN;
+  if (gatewayKey) return { apiKey: gatewayKey, baseURL: "https://ai-gateway.vercel.sh", model: serverEnv.anthropicModel || "anthropic/claude-haiku-4.5" };
+  return null;
+}
+
 export function isAssistantConfigured(): boolean {
-  return Boolean(serverEnv.anthropicApiKey && serverEnv.anthropicModel);
+  return assistantCredentials() !== null;
 }
 
 function positiveInt(value: string | undefined, fallback: number): number {

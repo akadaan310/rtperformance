@@ -104,7 +104,7 @@ export default async function AthletesPage({ params, searchParams }: { params: P
                       {pct(att.rate)} <span className="text-xs text-stone-500">{att.completed + att.missed ? `(${att.completed}/${att.completed + att.missed})` : ""}</span>
                     </td>
                     <td className="px-3 py-3 text-stone-300">{last ? formatDate(last) : <span className="text-stone-500">—</span>}</td>
-                    <td className="px-3 py-3 text-xs text-signal-400">{flags.map(describeAttention).join(" · ") || <span className="text-stone-600">—</span>}</td>
+                    <td className="px-3 py-3 text-xs text-signal-400">{flags.map(describeAttention).join(" · ") || <span className="text-stone-500">—</span>}</td>
                   </tr>
                 );
               })}

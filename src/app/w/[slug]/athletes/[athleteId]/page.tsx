@@ -182,7 +182,7 @@ async function Overview({ ctx, athlete, assignments, notes, fields, self }: { ct
             {details.map(([k, v]) => (
               <div key={k} className={k.startsWith("Training") || k.startsWith("Limit") ? "sm:col-span-2" : ""}>
                 <dt className="eyebrow">{k}</dt>
-                <dd className={`mt-1 whitespace-pre-line text-sm ${v ? "text-ivory-100" : "text-stone-600"}`}>{v ?? "Not recorded"}</dd>
+                <dd className={`mt-1 whitespace-pre-line text-sm ${v ? "text-ivory-100" : "text-stone-500"}`}>{v ?? "Not recorded"}</dd>
               </div>
             ))}
           </dl>

@@ -197,7 +197,7 @@ export function WorkoutLogger({ slug, detail, path, doneHref, actorLabel }: { sl
                 </thead>
                 <tbody>
                   {list.map((row, idx) => {
-                    const cell = "h-10 w-full min-w-14 rounded-xs border bg-ink-950 px-2 text-sm text-ivory-50 placeholder:text-stone-600 focus:border-accent focus:outline-none disabled:opacity-70";
+                    const cell = "h-10 w-full min-w-14 rounded-xs border bg-ink-950 px-2 text-sm text-ivory-50 placeholder:text-stone-500 focus:border-accent focus:outline-none disabled:opacity-70";
                     const border = row.saved ? "border-accent/40" : "border-ink-600";
                     const label = `${ex.exercise.name} set ${row.set_number}`;
                     return (
@@ -239,7 +239,7 @@ export function WorkoutLogger({ slug, detail, path, doneHref, actorLabel }: { sl
                               <button type="button" onClick={() => save(ex, idx)} disabled={row.saving} aria-label={`Save ${label}`} className={cn("inline-flex size-10 items-center justify-center rounded-xs border", row.saved ? "border-accent bg-accent/15 text-accent" : "border-ink-600 text-stone-300 hover:border-accent hover:text-accent")}>
                                 {row.saving ? <Spinner /> : <Check className="size-4" aria-hidden />}
                               </button>
-                              <button type="button" onClick={() => remove(ex, idx)} aria-label={`Remove ${label}`} className="inline-flex size-10 items-center justify-center rounded-xs text-stone-600 hover:text-signal-400">
+                              <button type="button" onClick={() => remove(ex, idx)} aria-label={`Remove ${label}`} className="inline-flex size-10 items-center justify-center rounded-xs text-stone-500 hover:text-signal-400">
                                 <Trash2 className="size-4" aria-hidden />
                               </button>
                             </div>

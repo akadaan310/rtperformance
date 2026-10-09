@@ -113,10 +113,10 @@ function Hero({ signedIn }: { signedIn: boolean }) {
   );
 }
 
-function SectionLabel({ index, label }: { index: string; label: string }) {
+function SectionLabel({ index, label, onLight = false }: { index: string; label: string; onLight?: boolean }) {
   return (
     <div className="flex items-center gap-4">
-      <span className="display-tight text-sm text-accent">{index}</span>
+      <span className={`display-tight text-sm ${onLight ? "text-gold-700" : "text-accent"}`}>{index}</span>
       <span className="h-px w-10 bg-ink-600" aria-hidden />
       <span className="eyebrow">{label}</span>
     </div>
@@ -131,10 +131,10 @@ function Philosophy() {
   ];
   return (
     <section id="philosophy" className="relative bg-ivory-50 text-ink-900" aria-labelledby="philosophy-title">
-      <div className="mx-auto grid max-w-7xl gap-12 px-5 py-24 md:grid-cols-12 md:px-8 md:py-32">
+      <div className="mx-auto grid max-w-7xl gap-12 px-5 py-24 md:grid-cols-12 md:px-8 [&>*]:min-w-0 md:py-32">
         <div className="md:col-span-7">
           <div className="[--color-stone-400:#5d584f]">
-            <SectionLabel index="01" label="The philosophy" />
+            <SectionLabel index="01" label="The philosophy" onLight />
           </div>
           <h2 id="philosophy-title" className="display mt-8 text-5xl text-ink-950 md:text-7xl">
             Relentless training.
@@ -174,7 +174,7 @@ function Programming() {
   ];
   return (
     <section id="programming" className="relative overflow-hidden border-t border-ink-800" aria-labelledby="programming-title">
-      <div className="mx-auto grid max-w-7xl gap-14 px-5 py-24 md:grid-cols-12 md:px-8 md:py-32">
+      <div className="mx-auto grid max-w-7xl gap-14 px-5 py-24 md:grid-cols-12 md:px-8 [&>*]:min-w-0 md:py-32">
         <div className="md:col-span-5">
           <SectionLabel index="02" label="Structured programming" />
           <h2 id="programming-title" className="display mt-8 text-5xl text-ivory-50 md:text-6xl">
@@ -251,7 +251,7 @@ function TechGuy() {
   ];
   return (
     <section id="tech-guy" className="relative border-t border-ink-800 bg-ink-900" aria-labelledby="techguy-title">
-      <div className="mx-auto grid max-w-7xl gap-14 px-5 py-24 md:grid-cols-12 md:px-8 md:py-32">
+      <div className="mx-auto grid max-w-7xl gap-14 px-5 py-24 md:grid-cols-12 md:px-8 [&>*]:min-w-0 md:py-32">
         <div className="md:col-span-6">
           <SectionLabel index="03" label="Intelligent coaching assistance" />
           <h2 id="techguy-title" className="display mt-8 text-5xl text-ivory-50 md:text-6xl">
@@ -296,7 +296,7 @@ function TechGuy() {
 function AthleteExperience() {
   return (
     <section id="athletes" className="relative border-t border-ink-800" aria-labelledby="athletes-title">
-      <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 py-24 md:grid-cols-12 md:px-8 md:py-32">
+      <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 py-24 md:grid-cols-12 md:px-8 [&>*]:min-w-0 md:py-32">
         <div className="relative md:col-span-6">
           <div className="relative aspect-[4/3] overflow-hidden rounded-xs">
             <Image src={IMAGERY.athlete.src} alt={IMAGERY.athlete.alt} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover grayscale" style={{ objectPosition: IMAGERY.athlete.position }} />
@@ -343,7 +343,7 @@ function AthleteExperience() {
 function Network() {
   return (
     <section id="coaches" className="relative overflow-hidden border-t border-ink-800 bg-ink-900" aria-labelledby="network-title">
-      <div className="mx-auto grid max-w-7xl gap-14 px-5 py-24 md:grid-cols-12 md:px-8 md:py-32">
+      <div className="mx-auto grid max-w-7xl gap-14 px-5 py-24 md:grid-cols-12 md:px-8 [&>*]:min-w-0 md:py-32">
         <div className="md:col-span-7">
           <SectionLabel index="05" label="The trainer network" />
           <h2 id="network-title" className="display mt-8 text-5xl text-ivory-50 md:text-6xl">
@@ -417,7 +417,7 @@ function ClosingCta({ signedIn }: { signedIn: boolean }) {
 function SiteFooter() {
   return (
     <footer className="border-t border-ink-800 bg-ink-950">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:grid-cols-12 md:px-8">
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:grid-cols-12 md:px-8 [&>*]:min-w-0">
         <div className="md:col-span-5">
           <Wordmark />
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-stone-400">Relentless Training. Intelligent Progress. Personal training and coaching from Tampa, Florida.</p>

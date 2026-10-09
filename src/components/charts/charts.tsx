@@ -85,7 +85,7 @@ export function TrendLine({ title, points, unit, summary, height = 200, format }
   return (
     <ChartFrame title={title} summary={summary} points={points} unit={unit} height={height} format={format}>
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: -12 }}>
+        <LineChart accessibilityLayer={false} data={data} margin={{ top: 8, right: 8, bottom: 0, left: -12 }}>
           <CartesianGrid vertical={false} stroke="#2c2c31" strokeDasharray="0" />
           <XAxis dataKey="label" {...AXIS} minTickGap={24} />
           <YAxis {...AXIS} width={44} domain={["auto", "auto"]} tickFormatter={yTick} />
@@ -102,7 +102,7 @@ export function BarSeries({ title, points, unit, summary, height = 180, format }
   return (
     <ChartFrame title={title} summary={summary} points={points} unit={unit} height={height} format={format}>
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={points} margin={{ top: 8, right: 8, bottom: 0, left: -12 }} barCategoryGap={2}>
+        <BarChart accessibilityLayer={false} data={points} margin={{ top: 8, right: 8, bottom: 0, left: -12 }} barCategoryGap={2}>
           <CartesianGrid vertical={false} stroke="#2c2c31" />
           <XAxis dataKey="label" {...AXIS} minTickGap={16} />
           <YAxis {...AXIS} width={44} allowDecimals={false} tickFormatter={yTick} />
