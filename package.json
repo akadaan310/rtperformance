@@ -1,0 +1,52 @@
+{
+  "name": "rt-performance",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RT Performance \u2014 personal training and trainer-network platform for Raymond Tate Performance.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:db": "vitest run --config vitest.db.config.ts",
+    "test:e2e": "playwright test",
+    "stack:start": "bash scripts/local-stack/start.sh",
+    "stack:stop": "bash scripts/local-stack/stop.sh",
+    "db:migrate:local": "bash scripts/local-stack/migrate.sh",
+    "db:seed:dev": "node scripts/seed-dev.mjs --yes",
+    "provision:owner": "node scripts/provision-owner.mjs",
+    "stack:reset": "bash scripts/local-stack/reset.sh"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.132.1",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.117.3",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.54.0",
+    "next": "^16.4.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "recharts": "^3.10.1",
+    "server-only": "^0.0.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.6.4",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitest/coverage-v8": "^5.0.3",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.0",
+    "jose": "^6.2.12",
+    "pg": "^8.23.1",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.3"
+  }
+}

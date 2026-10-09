@@ -1,0 +1,19 @@
+# dependencies & build output
+node_modules
+.next
+out
+coverage
+playwright-report
+test-results
+*.tsbuildinfo
+next-env.d.ts
+
+# local Supabase-compatible stack (binaries, pids, logs)
+.local-stack
+
+# secrets — never commit
+.env
+.env*.local
+
+# scratch scripts
+*.tmp.mjs

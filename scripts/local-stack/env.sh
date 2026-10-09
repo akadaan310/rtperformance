@@ -1,0 +1,10 @@
+# Shared settings for the Docker-free local Supabase-compatible stack (development / CI only).
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+STACK_DIR="$ROOT/.local-stack"
+PG_BIN="${PG_BIN:-$(ls -d /usr/lib/postgresql/*/bin 2>/dev/null | sort -V | tail -1)}"
+PG_PORT="${PG_PORT:-54322}"
+PG_DATA="${PG_DATA:-/var/lib/rtperformance-pg/data}"
+JWT_SECRET="${LOCAL_JWT_SECRET:-local-dev-jwt-secret-not-for-production-use-0001}"
+POSTGREST_VERSION="v12.2.3"
+GOTRUE_VERSION="v2.177.0"
+PSQL="psql -h 127.0.0.1 -p $PG_PORT -U postgres -d postgres -v ON_ERROR_STOP=1 -q"
