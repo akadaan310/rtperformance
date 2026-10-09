@@ -58,12 +58,14 @@ export function SidebarNav(props: NavProps) {
 }
 
 export function MobileNav({ children, ...props }: NavProps & { children: React.ReactNode }) {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  useEffect(() => setOpen(false), [pathname]);
+  // The menu is "open for" the path it was opened on, so navigating closes it without an effect.
+  const [openFor, setOpenFor] = useState<string | null>(null);
+  const open = openFor === pathname;
+  const setOpen = (next: boolean | ((o: boolean) => boolean)) => setOpenFor((typeof next === "function" ? next(open) : next) ? pathname : null);
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenFor(null);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);

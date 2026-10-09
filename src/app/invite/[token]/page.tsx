@@ -23,7 +23,14 @@ const KIND_COPY: Record<string, { label: string; body: (org: string) => string }
 export default async function InvitePage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
   const supabase = await createClient();
-  const [invite, user] = await Promise.all([previewInvitation(supabase, token).catch(() => null), getSessionUser()]);
+  const [preview, user] = await Promise.all([
+    previewInvitation(supabase, token).then(
+      (invite) => ({ invite, failed: false }),
+      () => ({ invite: null, failed: true }),
+    ),
+    getSessionUser(),
+  ]);
+  const { invite, failed: loadFailed } = preview;
   const next = `/invite/${encodeURIComponent(token)}`;
 
   return (
@@ -35,7 +42,9 @@ export default async function InvitePage({ params }: { params: Promise<{ token: 
         {user && <SignOutButton />}
       </header>
       <main id="main" className="mx-auto max-w-xl px-6 pb-24 pt-10">
-        {!invite ? (
+        {loadFailed ? (
+          <Problem title="Couldn't load invitation" body="Something went wrong on our side. Refresh the page in a moment." />
+        ) : !invite ? (
           <Problem title="Invitation not found" body="This link isn't valid. Check that you copied the whole link, or ask for a new invitation." />
         ) : invite.status !== "pending" ? (
           <Problem

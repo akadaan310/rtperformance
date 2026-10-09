@@ -636,6 +636,7 @@ export function getTool(name: string): ToolDefinition | undefined {
 
 /** Tools offered to the model: only those the current user could ever use. */
 export function toolsFor(ctx: ServiceContext): Anthropic.Tool[] {
+  if (!can(ctx, "assistant.use")) return [];
   return TOOLS.filter((t) => {
     // For tools whose permission depends on input, offer them if any variant is permitted.
     if (t.name === "prepare_invitation") return can(ctx, "athletes.invite") || can(ctx, "team.manage") || can(ctx, "network.manage");
@@ -657,6 +658,7 @@ export type ValidationOutcome =
 
 /** Allowlist + schema + permission gate applied to every model-proposed tool call. */
 export function validateToolCall(ctx: ServiceContext, name: string, rawInput: unknown): ValidationOutcome {
+  if (!can(ctx, "assistant.use")) return { ok: false, error: "The assistant is only available to coaches." };
   const tool = getTool(name);
   if (!tool) return { ok: false, error: `Unknown tool "${name}".` };
   const parsed = tool.schema.safeParse(rawInput ?? {});

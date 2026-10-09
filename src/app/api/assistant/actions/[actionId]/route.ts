@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
+import { isSameOrigin } from "@/lib/same-origin";
 import { getWorkspaceContext } from "@/lib/auth/context";
 import { decidePendingAction } from "@/lib/ai/runner";
 import { failure } from "@/lib/result";
@@ -10,6 +11,7 @@ const body = z.object({ slug: z.string().min(1).max(60), decision: z.enum(["conf
 
 /** Explicit human confirmation (or cancellation) of an action proposed by The Tech Guy. */
 export async function POST(request: NextRequest, context: { params: Promise<{ actionId: string }> }) {
+  if (!isSameOrigin(request)) return NextResponse.json({ error: "Forbidden." }, { status: 403 });
   const { actionId } = await context.params;
   const parsed = body.safeParse(await request.json().catch(() => null));
   if (!parsed.success || !z.string().uuid().safeParse(actionId).success) return NextResponse.json({ error: "Invalid request." }, { status: 400 });

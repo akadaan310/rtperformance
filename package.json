@@ -18,7 +18,9 @@
     "db:migrate:local": "bash scripts/local-stack/migrate.sh",
     "db:seed:dev": "node scripts/seed-dev.mjs --yes",
     "provision:owner": "node scripts/provision-owner.mjs",
-    "stack:reset": "bash scripts/local-stack/reset.sh"
+    "stack:reset": "bash scripts/local-stack/reset.sh",
+    "test:all": "npm run typecheck && npm run lint && npm test && npm run test:db && npm run test:e2e",
+    "supabase": "npx -y supabase@2"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.132.1",
@@ -48,5 +50,8 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "vitest": "^5.0.3"
+  },
+  "engines": {
+    "node": ">=20.9"
   }
 }

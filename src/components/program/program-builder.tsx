@@ -251,7 +251,7 @@ function PrescriptionForm({ pe, exercises, onSave, pending }: { pe: Pex; exercis
       <div>
         <label htmlFor={id("load_type")} className={lbl}>Load</label>
         <Select id={id("load_type")} value={v.load_type} onChange={set("load_type")}>
-          <option value="none">Coach's call</option>
+          <option value="none">Coach&apos;s call</option>
           <option value="weight">Fixed weight</option>
           <option value="percent_1rm">% of 1RM</option>
           <option value="rpe">By RPE</option>

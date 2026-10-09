@@ -46,6 +46,7 @@ export GOTRUE_API_HOST=127.0.0.1 PORT=9999 API_EXTERNAL_URL=http://127.0.0.1:543
   GOTRUE_DB_DRIVER=postgres GOTRUE_DB_MIGRATIONS_PATH="$STACK_DIR/bin/auth/migrations" \
   GOTRUE_DB_DATABASE_URL="postgres://supabase_auth_admin:postgres@127.0.0.1:$PG_PORT/postgres?search_path=auth&sslmode=disable" \
   GOTRUE_JWT_SECRET="$JWT_SECRET" GOTRUE_JWT_EXP=3600 GOTRUE_JWT_AUD=authenticated GOTRUE_JWT_ADMIN_ROLES=service_role \
+  GOTRUE_JWT_DEFAULT_GROUP_NAME=authenticated \
   GOTRUE_DISABLE_SIGNUP=false GOTRUE_EXTERNAL_EMAIL_ENABLED=true GOTRUE_MAILER_AUTOCONFIRM=true \
   GOTRUE_SMTP_ADMIN_EMAIL=admin@localhost GOTRUE_RATE_LIMIT_EMAIL_SENT=1000 GOTRUE_LOG_LEVEL=warn
 start_bg auth "$STACK_DIR/bin/auth/auth"

@@ -64,6 +64,13 @@ const TOOL_LABELS: Record<string, string> = {
   update_branding: "Queued branding changes for confirmation",
 };
 
+const DONE_LABELS: Record<string, string> = {
+  prepare_invitation: "Invitation created.",
+  publish_program: "Program published.",
+  assign_program: "Program assigned.",
+  update_branding: "Branding updated.",
+};
+
 /** Run one user turn. Throws ServiceError for user-facing problems (limits, validation). */
 export async function runAssistantTurn(ctx: ServiceContext, rawInput: unknown, model: AssistantModel, limits: RunnerLimits): Promise<TurnResult> {
   assertCan(ctx, "assistant.use", "The Tech Guy is available to coaches in this workspace.");
@@ -92,6 +99,8 @@ export async function runAssistantTurn(ctx: ServiceContext, rawInput: unknown, m
   const cards: AssistantCard[] = [];
   const activity: ToolActivity[] = [];
   const memos: string[] = [];
+  // Narrative the model writes alongside tool calls is shown to the user too.
+  const interim: string[] = [];
   let finalText = "";
 
   try {
@@ -127,6 +136,7 @@ export async function runAssistantTurn(ctx: ServiceContext, rawInput: unknown, m
         break;
       }
 
+      if (text) interim.push(text);
       // Execute every requested tool, returning all results in a single user message.
       const results: Anthropic.ToolResultBlockParam[] = [];
       for (const call of toolUses) {
@@ -150,7 +160,7 @@ export async function runAssistantTurn(ctx: ServiceContext, rawInput: unknown, m
     return { conversationId: conversation.id, messages: newMessages };
   }
 
-  const display: DisplayPayload = { text: finalText, cards, activity };
+  const display: DisplayPayload = { text: [...interim, finalText].filter(Boolean).join("\n\n"), cards, activity };
   const row = await insertMessage(ctx, conversation.id, "assistant", finalText, display);
   newMessages.push(toDisplay(row));
   await touchConversation(ctx, conversation.id, conversation.summary, memos);
@@ -264,7 +274,7 @@ export async function decidePendingAction(ctx: ServiceContext, actionId: string,
     }
   }
   await ctx.supabase.from("ai_pending_actions").update({ status, result: resultPayload }).eq("id", actionId);
-  const text = status === "executed" ? `Confirmed and completed: ${TOOL_LABELS[action.tool_name as string]?.replace(" for confirmation", "") ?? action.tool_name}.` : `That action failed: ${message}`;
+  const text = status === "executed" ? `Confirmed — ${DONE_LABELS[action.tool_name as string] ?? "done."}` : `That action failed: ${message}`;
   // Recorded so the model sees the real outcome on the next turn.
   await insertMessage(ctx, action.conversation_id as string, "assistant", `[Action ${action.tool_name} ${status}] ${truncate(JSON.stringify(resultPayload ?? null), 2000)}`, {
     text,

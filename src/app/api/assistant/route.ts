@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
+import { isSameOrigin } from "@/lib/same-origin";
 import { getWorkspaceContext } from "@/lib/auth/context";
 import { can } from "@/lib/auth/permissions";
 import { assistantLimits, getAssistantModel } from "@/lib/ai/server";
@@ -12,6 +13,7 @@ export const maxDuration = 120;
 const body = z.object({ slug: z.string().min(1).max(60), conversation_id: z.string().uuid().nullable().optional(), message: z.string() });
 
 export async function POST(request: NextRequest) {
+  if (!isSameOrigin(request)) return NextResponse.json({ error: "Forbidden." }, { status: 403 });
   const parsed = body.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   const ctx = await getWorkspaceContext(parsed.data.slug);
